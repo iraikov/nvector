@@ -3,7 +3,7 @@
  * nvector.sml
  *
  *
- * Copyright 2009 Ivan Raikov
+ * Copyright 2009-2013 Ivan Raikov
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
