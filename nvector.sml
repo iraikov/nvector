@@ -3,7 +3,7 @@
  * nvector.sml
  *
  *
- * Copyright 2009-2013 Ivan Raikov
+ * Copyright 2009-2016 Ivan Raikov
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -222,26 +222,3 @@ struct
 	end
 
 end
-
-fun realRandomArray (xseed,yseed) size =
-    let 
-        val seed   = Random.rand (xseed,yseed)
-        val a      = Real64Array.array(size, Random.randReal seed)
-        fun loop 0 = a
-          | loop j = (Real64Array.update(a, size-j, Random.randReal seed);
-                      loop (j-1))
-    in loop (size - 1)
-    end
-
-val _ = (let open NVector
-             val n = 100000
-	     val v = VMake (n, realRandomArray (19,23) n)
-	     val v1 = VAbs v
-	     val v3 = VLinearSum (1.0,v,2.0,v1)
-	     val v4 = VLinearSum (3.0,v1,4.0,v3)
-	 in
-	     VPrint v;
-	     VPrint v1;
-	     VPrint v3
-	 end)
-

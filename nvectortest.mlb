@@ -1,0 +1,7 @@
+ann "allowFFI true" in
+$(SML_LIB)/basis/basis.mlb
+$(SML_LIB)/basis/mlton.mlb
+$(SML_LIB)/smlnj-lib/Util/smlnj-lib.mlb
+nvector.sml
+nvectortest.sml
+end
