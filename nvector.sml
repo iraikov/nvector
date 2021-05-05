@@ -27,17 +27,17 @@ sig
 
     type nvector = t
 
-    val VNewEmpty: int -> nvector
+    val VNew: int -> nvector
 
-    val VSetArrayPointer: Real64Array.array * nvector -> nvector
-
-    val VMake: int * Real64Array.array -> nvector
+    val VMake: Real64Array.array -> nvector
 
     val VClone: nvector -> nvector
 
     val VPrint: nvector -> unit
 
     val VSub: int * nvector -> real
+                                   
+    val VSet: int * real * nvector -> unit
 
     (* z = a x + b y *)
     val VLinearSum: real * nvector * real * nvector -> nvector
@@ -102,18 +102,31 @@ struct
     open MLton.Pointer
 
     type nvector = t
+                       
+    fun app (a, b, f) =
+        if a < b then
+            (f a; app (a+1, b, f))
+        else
+            ()
 
-    val VNewEmpty = _import "N_VNewEmpty" : int -> nvector;
-
-    val VMake = _import "N_VMake_Serial" : int * Real64Array.array -> nvector;
+    val VNew = _import "N_VNew_Serial" : int -> nvector;
 
     val VClone = _import "N_VClone" : nvector -> nvector;
 
     val VPrint = _import "N_VPrint_Serial": nvector -> unit;
 
-    val VSetArrayPointer = _import "N_VSetArrayPointer" : Real64Array.array * nvector -> nvector;
-
     val VSub = _import "N_VSub" : int * nvector -> real;
+
+    val VSet = _import "N_VSet" : int * real * nvector -> unit;
+
+    fun VMake (v: Real64Array.array) = 
+                                                          
+        let val n = Real64Array.length v
+            val res = VNew n
+        in
+            app (0, n, fn(i) => VSet (i, Real64Array.sub(v, i), res)); res
+        end
+
 
     val CVLinearSum = _import "N_VLinearSum_Serial": real * nvector * real * nvector * nvector -> unit;
     fun VLinearSum (a: real, x: nvector, b: real, y: nvector) =

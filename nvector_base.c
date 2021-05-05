@@ -227,9 +227,4 @@ void N_VDestroyVectorArray(N_Vector *vs, int count)
   free(vs);
 }
 
-realtype N_VSub(int i, N_Vector x)
-{
-  realtype *data;
-  data = N_VGetArrayPointer(x);
-  return data[i];
-}
+

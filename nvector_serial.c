@@ -933,3 +933,15 @@ static void VScaleBy_Serial(realtype a, N_Vector x)
   for (i=0; i < N; i++)
     *xd++ *= a;
 }
+
+realtype N_VSub(int i, N_Vector x)
+{
+  realtype *xd = NV_DATA_S(x);
+  return xd[i];
+}
+
+void N_VSet(int i, realtype x, N_Vector v)
+{
+  realtype *xd = NV_DATA_S(v);
+  xd[i] = x;
+}

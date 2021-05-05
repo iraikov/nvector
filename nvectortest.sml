@@ -18,7 +18,7 @@ fun realRandomArray (xseed,yseed) size =
 
 val _ = (let open NVector
              val n = 4
-	     val v = VMake (n, Real64Array.fromList [1.0,2.0,3.0,4.0])
+	     val v = VMake (Real64Array.fromList [1.0,2.0,3.0,4.0])
 	     val v1 = VAbs v
 	     val v3 = VLinearSum (1.0,v,2.0,v1)
 	     val v4 = VLinearSum (3.0,v1,4.0,v3)
